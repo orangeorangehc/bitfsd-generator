@@ -1,0 +1,15 @@
+[project]
+name = "bitfsd-generator"
+version = "0.1.0"
+description = "FSD track generation and perception data platform"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.136.1",
+    "matplotlib>=3.10.9",
+    "numpy>=2.4.4",
+    "pyyaml>=6.0.3",
+    "uvicorn>=0.46.0",
+]
+
+[project.scripts]
+bitfsd-generator = "main:main"

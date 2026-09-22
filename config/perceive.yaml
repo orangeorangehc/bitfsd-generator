@@ -1,0 +1,52 @@
+# BITFSD SideNet Data Collection Config
+# Usage: uv run python main.py collect --config config/perceive.yaml
+
+# 传感器参数
+sensor:
+  lidar_range_max: 30.0
+  lidar_range_min: 0.5
+  lidar_fov_deg: 180.0
+
+# 车辆定位噪声
+ego:
+  spacing: 5.0          # 沿中心线采样间隔 (m)
+  noise_x: 0.1          # 定位噪声 sigma (m)
+  noise_y: 0.1
+  noise_yaw_deg: 1.0    # 航向噪声 sigma (deg)
+
+# 感知噪声
+perception:
+  position_noise_xy: 0.10   # 锥桶位置噪声 sigma (m)
+  position_noise_z: 0.03
+  drop_rate: 0.10           # 漏检率
+  fp_rate: 0.05             # 误检率
+
+# 真实赛道 (data/ 目录下的文件名)
+real_tracks:
+  - FSCZ24.yaml
+  - FSE22.yaml
+  - FSE22_test.yaml
+  - FSE23.yaml
+  - FSE24.yaml
+  - FSG19.yaml
+  - FSG21.yaml
+  - FSG23.yaml
+  - FSG24.yaml
+  - FSI24.yaml
+  - FSO20.yaml
+  - FSS19.yaml
+  - FSS22_V1.yaml
+  - FSS22_V2.yaml
+
+# 合成赛道 (config/track_presets.yaml 中的预设名)
+synthetic_tracks: []
+
+# 数据增强
+augmentation:
+  flip: false    # SideNet 默认使用 canonical driving direction
+  seed: 42
+
+# 输出
+output:
+  dir: output/sidenet_data_ego
+  coordinate_frame: ego

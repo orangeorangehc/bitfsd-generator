@@ -1,0 +1,75 @@
+presets:
+  simple_oval:
+    description: "Simple oval — two straights, two 180° curves"
+    seed: 42
+    track_width: 4.0
+    segments:
+      - {type: straight, length: 70}
+      - {type: curve, radius: 18, angle: 180}
+      - {type: straight, length: 70}
+      - {type: curve, radius: 18, angle: 180}
+
+  tight_oval:
+    description: "Compact oval with tighter curves"
+    seed: 43
+    track_width: 3.5
+    segments:
+      - {type: straight, length: 65}
+      - {type: curve, radius: 12, angle: 180}
+      - {type: straight, length: 65}
+      - {type: curve, radius: 12, angle: 180}
+
+  hairpin:
+    description: "Hairpin-heavy track — two 180° turns at min radius"
+    seed: 101
+    track_width: 3.0
+    segments:
+      - {type: straight, length: 75}
+      - {type: curve, radius: 9, angle: 180}
+      - {type: straight, length: 75}
+      - {type: curve, radius: 9, angle: 180}
+
+  s_curve:
+    description: "Technical S-curve section connecting two sweeping turns"
+    seed: 202
+    track_width: 3.5
+    segments:
+      - {type: straight, length: 50}
+      - {type: curve, radius: 20, angle: -90}
+      - {type: curve, radius: 15, angle: 90}
+      - {type: curve, radius: 15, angle: 90}
+      - {type: curve, radius: 20, angle: -90}
+      - {type: straight, length: 50}
+      - {type: curve, radius: 18, angle: 180}
+
+  triangle:
+    description: "Triangle-like shape — three straights, three 120° sweepers"
+    seed: 303
+    track_width: 4.0
+    segments:
+      - {type: straight, length: 80}
+      - {type: curve, radius: 18, angle: 120}
+      - {type: straight, length: 80}
+      - {type: curve, radius: 18, angle: 120}
+      - {type: straight, length: 80}
+      - {type: curve, radius: 18, angle: 120}
+
+  long_track:
+    description: "Long rounded rectangle — ~420m"
+    seed: 404
+    track_width: 4.0
+    segments:
+      - {type: straight, length: 100}
+      - {type: curve, radius: 18, angle: -90}
+      - {type: straight, length: 60}
+      - {type: curve, radius: 14, angle: -90}
+      - {type: straight, length: 100}
+      - {type: curve, radius: 18, angle: -90}
+      - {type: straight, length: 60}
+      - {type: curve, radius: 14, angle: -90}
+
+defaults:
+  cone_spacing_min: 3.0
+  cone_spacing_max: 5.0
+  centerline_resolution: 0.2
+  track_width: 4.0
