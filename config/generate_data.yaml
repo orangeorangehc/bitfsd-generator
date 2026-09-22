@@ -1,0 +1,41 @@
+# bash generate_data.sh
+# 相对输出路径以 bitfsd-generator 项目根目录为基准。
+# 更换输出目录时，同步修改 SideNet/sidenet 的 configs/split_data.yaml 中 data_dir。
+# Seeds vary observations, not track geometry. Partition all variants by family.
+sensor:
+  lidar_range_max: 30.0
+  lidar_range_min: 0.5
+  lidar_fov_deg: 180.0
+ego:
+  spacing: 5.0
+  noise_x: 0.1
+  noise_y: 0.1
+  noise_yaw_deg: 1.0
+perception:
+  position_noise_xy: 0.10
+  position_noise_z: 0.03
+  drop_rate: 0.10
+  fp_rate: 0.05
+real_tracks:
+  - FSCZ24.yaml
+  - FSE22.yaml
+  - FSE22_test.yaml
+  - FSE23.yaml
+  - FSE24.yaml
+  - FSG19.yaml
+  - FSG21.yaml
+  - FSG23.yaml
+  - FSG24.yaml
+  - FSI24.yaml
+  - FSO20.yaml
+  - FSS19.yaml
+  - FSS22_V1.yaml
+  - FSS22_V2.yaml
+# Keep the three similar oval layouts together in training; triangle is validation.
+synthetic_tracks: [simple_oval, tight_oval, hairpin, triangle]
+augmentation:
+  flip: false
+  seeds: [42, 43, 44]
+output:
+  dir: output/sidenet_data_pipeline_ego
+  coordinate_frame: ego

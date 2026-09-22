@@ -120,6 +120,20 @@ uv run python main.py infer --track data/FSCZ24.yaml --ckpt output/sidenet_ckpt/
 
 ### 批量生成 SideNet 训练数据
 
+通过专用 YAML 批量生成：
+
+```bash
+bash generate_data.sh                                      # config/generate_data.yaml
+bash generate_data.sh --config config/generate_data.yaml --dry-run
+```
+
+修改 `config/generate_data.yaml` 中的地图、预设、seed、传感器参数和输出目录即可。
+默认使用本项目 `.venv`，输出到 `output/sidenet_data_pipeline_ego`；已有输出目录会报错。
+脚本从自身位置解析项目路径，可从其他目录调用。
+随后在 SideNet/sidenet 项目中执行 `bash split_data.sh` 和 `bash start_training.sh`，
+分别读取 `configs/split_data.yaml` 和 `configs/train.yaml`。
+完整说明见 SideNet 的 `docs/WORKFLOW_SCRIPTS.md`。
+
 首次使用请先阅读配套的 [数据生成、划分与训练操作指南](https://github.com/orangeorangehc/sidenet/blob/main/docs/TRAINING_GUIDE.md)，
 其中包含两个仓库的克隆、共享环境安装、训练/验证/测试划分及独立测试命令。
 

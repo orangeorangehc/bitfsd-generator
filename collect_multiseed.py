@@ -12,7 +12,7 @@ from main import cmd_collect
 from export import write_sidenet_manifest
 
 
-def collect_multiseed(config_path, output_dir=None):
+def collect_multiseed(config_path, output_dir=None, *, dry_run=False):
     config_path = Path(config_path).resolve()
     cfg = yaml.safe_load(config_path.read_text())
     seeds = cfg.get("augmentation", {}).get("seeds", [])
@@ -37,6 +37,23 @@ def collect_multiseed(config_path, output_dir=None):
         raise ValueError("Duplicate track/preset names in collection configuration")
     if set(real_names) & set(synthetic_names):
         raise ValueError("Real and synthetic track names must be distinct")
+    if not real_names and not synthetic_names:
+        raise ValueError("Configure at least one real or synthetic track")
+
+    # Validate source names before collecting any seed (also used by --dry-run).
+    project = Path(__file__).resolve().parent
+    for name in cfg.get("real_tracks", []):
+        if not (project / "data" / name).is_file():
+            raise FileNotFoundError(f"Real track not found: {name}")
+    presets = yaml.safe_load((project / "config/track_presets.yaml").read_text())["presets"]
+    for name in synthetic_names:
+        if name not in presets:
+            raise ValueError(f"Synthetic preset not found: {name}")
+    print(f"Collection config: {config_path}")
+    print(f"Output: {root}; seeds={seeds}; variants={(len(real_names) + len(synthetic_names)) * len(seeds)}")
+    if dry_run:
+        print(yaml.safe_dump(cfg, sort_keys=False))
+        return root
 
     root.parent.mkdir(parents=True, exist_ok=True)
     # Publish only after every seed finishes; existing datasets are never overwritten.
@@ -86,5 +103,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", default="config/perceive_mixed.yaml")
     parser.add_argument("--output", help="New output directory (must not already exist)")
+    parser.add_argument("--dry-run", action="store_true", help="Validate and print the recipe without generating data")
     args = parser.parse_args()
-    collect_multiseed(args.config, args.output)
+    collect_multiseed(args.config, args.output, dry_run=args.dry_run)
