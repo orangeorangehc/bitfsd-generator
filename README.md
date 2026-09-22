@@ -100,6 +100,9 @@ uv run python main.py infer --track data/FSCZ24.yaml --ckpt output/sidenet_ckpt/
 
 ### 批量生成 SideNet 训练数据
 
+首次使用请先阅读配套的 [数据生成、划分与训练操作指南](https://github.com/orangeorangehc/sidenet/blob/main/docs/TRAINING_GUIDE.md)，
+其中包含两个仓库的克隆、共享环境安装、训练/验证/测试划分及独立测试命令。
+
 若要一次生成虚拟 + 真实赛道的多个 seed，使用专用入口：
 
 ```bash
