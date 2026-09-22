@@ -62,7 +62,27 @@ data/*.yaml（真实 FSD）   ──┘    (track.py)     (perception.py)      (
 
 ## 🚀 安装
 
-需要 **Python 3.12** 和 [`uv`](https://github.com/astral-sh/uv)：
+推荐使用独立环境配置脚本（Linux / WSL，Python 3.12/3.13）：
+
+```bash
+bash setup_env.sh          # 创建/复用本项目 .venv，安装依赖并检查
+bash setup_env.sh --check  # 只检测，不安装或更新依赖
+```
+
+脚本从 `pyproject.toml` 读取依赖，覆盖数据生成、Web 服务和可视化；不安装可选推理所需的 PyTorch。
+有 [`uv`](https://github.com/astral-sh/uv) 时可以自动下载 Python，否则使用本机 Python + venv/pip。
+可用 `--venv .venv-new --python 3.12` 建立新环境，相对路径以本项目为基准。
+已有环境会复用，满足要求的依赖会保留；损坏的环境会报错，不会自动删除。
+该脚本按 `pyproject.toml` 的版本范围安装；若需要严格使用 `uv.lock`，继续使用下面的 `uv sync`。
+
+使用脚本配置后，无需激活环境即可运行：
+
+```bash
+.venv/bin/python collect_multiseed.py --config config/perceive_mixed.yaml
+.venv/bin/python main.py serve
+```
+
+也可以沿用 **Python 3.12 + uv** 的安装方式（`start.sh` 仍需要 uv）：
 
 ```bash
 git clone git@github.com:Functionhx/bitfsd-generator.git
